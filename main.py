@@ -7,7 +7,6 @@ from my_enums import SortOrder, SortField
 from services import MoviesService
 
 app = Flask('movies_service')
-BASE_ELASTIC_URL = 'http://127.0.0.1:9200'
 
 
 @app.route('/api/movies/<movie_id>', methods=['GET'])
@@ -41,7 +40,7 @@ def movies_list():
         page=form.page.data,
         limit=form.limit.data,
     )
-    return jsonify([m.to_dict() for m in movies])
+    return jsonify([movie.to_dict() for movie in movies])
 
 
 if __name__ == '__main__':

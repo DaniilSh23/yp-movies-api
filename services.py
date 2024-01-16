@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from main import BASE_ELASTIC_URL
+from settings import BASE_ELASTIC_URL
 from my_dataclasses import Movie, Actor, Writer, ShortMovie
 from my_enums import SortField, SortOrder
 
@@ -106,7 +106,7 @@ class MoviesService:
 
         if not result:
             return movies
-        
+
         for record in result:
             movies.append(ShortMovie(
                 id=record['_source']['id'],
