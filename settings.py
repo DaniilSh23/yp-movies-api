@@ -1,2 +1,8 @@
+import os
 
-BASE_ELASTIC_URL = 'http://127.0.0.1:9200'
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_ELASTIC_URL = os.environ.get("BASE_ELASTIC_URL")
+ELASTIC_PASSWD = os.environ.get("ELASTIC_PASSWD")

@@ -3,15 +3,17 @@ from urllib.parse import urljoin
 
 import requests
 
-from settings import BASE_ELASTIC_URL
+from settings import BASE_ELASTIC_URL, ELASTIC_PASSWD
 from my_dataclasses import Movie, Actor, Writer, ShortMovie
 from my_enums import SortField, SortOrder
+from utils import make_request_session
 
 
 class MoviesService:
     """
     Сервис с бизнес-логикой для фильмов.
     """
+
     @staticmethod
     def get_movie_by_id(movie_id: str) -> Optional[Movie]:
         """
@@ -27,10 +29,12 @@ class MoviesService:
                 }
             }
         }
-        response = requests.get(
+        session = make_request_session()
+        response = session.get(
             url=urljoin(BASE_ELASTIC_URL, 'movies/_search'),
             json=request_data,
-            headers={'Content-Type': 'application/json'}
+            headers={'Content-Type': 'application/json'},
+            auth=("elastic", ELASTIC_PASSWD),
         )
         if not response.ok:
             response.raise_for_status()
@@ -91,10 +95,12 @@ class MoviesService:
                     ]
                 }
             }
-        response = requests.get(
+        session = make_request_session()
+        response = session.get(
             url=urljoin(BASE_ELASTIC_URL, 'movies/_search'),
             json=request_data,
-            headers={'Content-Type': 'application/json'}
+            headers={'Content-Type': 'application/json'},
+            auth=("elastic", ELASTIC_PASSWD),
         )
         if not response.ok:
             response.raise_for_status()
